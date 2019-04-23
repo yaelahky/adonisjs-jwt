@@ -17,3 +17,14 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+/*
+  Gunakan middleware('auth') untuk endpoint yang di proteksi oleh JWT
+*/
+
+Route.group(() => {
+  Route.post('/register', 'AuthController.register')
+  Route.post('/login', 'AuthController.login')
+  Route.post('/logout', 'AuthController.logout').middleware('auth') 
+  Route.get('/check', 'AuthController.accountCheck').middleware('auth')
+}).prefix('api/v1/auth')
